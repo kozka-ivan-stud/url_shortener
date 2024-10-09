@@ -1,5 +1,7 @@
 package me.desoliture.urls_shortener.controllers;
 
+import lombok.RequiredArgsConstructor;
+import me.desoliture.urls_shortener.services.RedirectionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,10 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/public")
+@RequiredArgsConstructor
 public class RedirectionController {
+    private final RedirectionService redirectionService;
 
     @GetMapping("/{alias}")
-    public ResponseEntity<?> redirect(@PathVariable String alias) {
-        throw new UnsupportedOperationException("Not implemented yet");
+    public ResponseEntity<Void> redirect(@PathVariable String alias) {
+        return redirectionService.process(alias);
     }
 }

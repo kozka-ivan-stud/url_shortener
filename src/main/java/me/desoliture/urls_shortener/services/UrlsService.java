@@ -15,6 +15,7 @@ public class UrlsService {
     private final ConcurrentMap<String, String> ORIGINAL_URLS = new ConcurrentHashMap<>();
 
     public String create(String originalUrl) {
+        validateUrl(originalUrl);
         var alias = RandomStringUtils.secure().nextAlphabetic(4, 9);
         ORIGINAL_URLS.put(originalUrl, originalUrl);
         return alias;
@@ -32,5 +33,11 @@ public class UrlsService {
     private String getOriginalUrl(String alias) {
         return Optional.ofNullable(ORIGINAL_URLS.get(alias))
                 .orElseThrow(() -> new NoSuchElementException("No info found for alias: " + alias));
+    }
+
+    private void validateUrl(String originalUrl) {
+        if (!originalUrl.startsWith("http") && !originalUrl.startsWith("https")) {
+            throw new IllegalArgumentException("Invalid URL: " + originalUrl);
+        }
     }
 }
