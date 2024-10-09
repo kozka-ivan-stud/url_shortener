@@ -17,7 +17,7 @@ public class UrlsService {
     public String create(String originalUrl) {
         validateUrl(originalUrl);
         var alias = RandomStringUtils.secure().nextAlphabetic(4, 9);
-        ORIGINAL_URLS.put(originalUrl, originalUrl);
+        ORIGINAL_URLS.put(alias, originalUrl);
         return alias;
     }
 
